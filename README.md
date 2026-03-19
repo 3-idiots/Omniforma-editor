@@ -10,7 +10,7 @@ Omniforma Editor is a browser-based visual programming environment for microcont
 The project is built for students, hobbyists, and educators who want to program Arduino-family boards and MicroPython-capable devices without needing the Arduino IDE or a separate Python editor. The user snaps blocks together, sees the generated code in real time, catches errors before flashing, and simulates execution on a virtual board.
 ---
 ## Preview
-    (https://3-idiots.github.io/Omniforma-editor/)
+[![Open Omniforma Editor](https://img.shields.io/badge/Open-Omniforma%20Editor-blue)](https://3-idiots.github.io/Omniforma-editor/)
 ---
 
 ## Core Features
