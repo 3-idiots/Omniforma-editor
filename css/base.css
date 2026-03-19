@@ -1,0 +1,153 @@
+/* =============================================================
+   base.css
+   Global reset, body, typography, colour tokens, buttons,
+   status bar, Blockly overrides, and syntax-highlight classes.
+   This is the first stylesheet imported in index.html.
+   ============================================================= */
+
+/* Global box-sizing reset */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* Root body - full-height dark theme shell */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background: #1a1a2e;
+  color: #eee;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   Topbar
+   --------------------------------------------------------------- */
+#topbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #16213e;
+  border-bottom: 2px solid #0f3460;
+  flex-wrap: wrap;
+}
+
+/* App title */
+#topbar h1 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e94560;
+  letter-spacing: 1px;
+  margin-right: auto;
+}
+
+/* Subtitle (e.g. "by 3 idiots") shown directly under the title */
+#topbar .subtitle {
+  font-size: 9px;
+  color: #534AB7;
+  letter-spacing: 1px;
+  font-weight: 600;
+  margin-top: -1px;
+}
+
+/* ---------------------------------------------------------------
+   Button variants
+   All share the .btn base class; colour modifier classes are
+   appended per-button (e.g. class="btn btn-orange").
+   --------------------------------------------------------------- */
+.btn {
+  padding: 6px 13px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: opacity .15s;
+}
+.btn:hover { opacity: .82; }
+
+.btn-green  { background: #1d9e75; color: #fff; }
+.btn-blue   { background: #378add; color: #fff; }
+.btn-purple { background: #7f77dd; color: #fff; }
+.btn-orange { background: #ba7517; color: #fff; }
+.btn-red    { background: #a32d2d; color: #fff; }
+.btn-gray   { background: #444;    color: #eee; }
+
+/* Thin vertical separator bar used between button groups in the topbar */
+.sep { width: 1px; height: 24px; background: #0f3460; margin: 0 2px; }
+
+/* ---------------------------------------------------------------
+   Status bar (bottom of the page)
+   --------------------------------------------------------------- */
+#status {
+  padding: 5px 12px;
+  font-size: 11px;
+  color: #1d9e75;
+  background: #0d1117;
+  border-top: 1px solid #30363d;
+  flex-shrink: 0;
+}
+
+/* ---------------------------------------------------------------
+   Blockly toolbox label overrides
+   These important rules override Blockly's inline SVG styles.
+   --------------------------------------------------------------- */
+.blocklyFlyoutLabelText {
+  fill: #8b949e !important;
+  font-size: 10px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+}
+.blocklyTreeLabel { font-size: 12px !important; }
+
+/* ---------------------------------------------------------------
+   Syntax highlight colour classes
+   Applied by the highlightMCU / highlightCPP / highlightASM
+   functions in compiler.js to spans inside <pre> output blocks.
+   --------------------------------------------------------------- */
+.kw   { color: #ff7b72; } /* language keywords  */
+.fn   { color: #d2a8ff; } /* function names     */
+.str  { color: #a5d6ff; } /* string literals    */
+.num  { color: #f0883e; } /* numeric literals   */
+.cmt  { color: #8b949e; } /* comments           */
+.type { color: #79c0ff; } /* type names         */
+
+/* HEX output colour coding */
+.hex-addr { color: #79c0ff; }
+.hex-data { color: #3fb950; }
+.hex-sum  { color: #f0883e; }
+
+/* Section labels above hex / binary dump blocks */
+.stage-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #e94560;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 10px 0 5px;
+}
+.stage-label:first-child { margin-top: 0; }
+
+/* Binary dump row layout */
+.hex-row   { display: flex; gap: 10px; font-size: 11px; margin: 1px 0; }
+.hex-off   { color: #79c0ff; min-width: 44px; font-family: monospace; }
+.hex-bytes { color: #3fb950; font-family: monospace; flex: 1; }
+.hex-bin   { color: #555;    font-family: monospace; font-size: 10px; }
+
+/* Code output box shared by all output panel tabs */
+.code-out {
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  background: #0d1117;
+  border-radius: 7px;
+  padding: 11px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  border: 1px solid #30363d;
+  min-height: 60px;
+  color: #c9d1d9;
+  line-height: 1.65;
+}
+
+/* Generic error text span used in the editor */
+.editor-error { color: #f85149; }

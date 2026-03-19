@@ -1,0 +1,274 @@
+/* =============================================================
+   simulator.css
+   Live simulator panel: header controls, scrollable body,
+   board SVG wrapper, digital pin rows, analog sliders,
+   serial monitor, and execution clock.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   Simulator panel container
+   --------------------------------------------------------------- */
+#sim-panel {
+  width: 340px;
+  min-width: 180px;
+  max-width: 60vw;
+  display: flex;
+  flex-direction: column;
+  background: #010409;
+  border-left: 2px solid #21262d;
+  flex-shrink: 0;
+  position: relative;
+  transition: width .2s;
+}
+#sim-panel.collapsed { width: 36px !important; min-width: 36px; overflow: hidden; }
+#sim-panel.collapsed #sim-header,
+#sim-panel.collapsed #sim-body { display: none; }
+
+/* ---------------------------------------------------------------
+   Vertical stub (desktop collapsed state)
+   --------------------------------------------------------------- */
+.sim-stub {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 8px;
+  gap: 6px;
+  width: 36px;
+  height: 100%;
+}
+#sim-panel.collapsed .sim-stub { display: flex; }
+.sim-stub-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 700;
+  color: #1d9e75;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+.sim-stub-icon { font-size: 14px; color: #1d9e75; cursor: pointer; }
+
+/* Horizontal stub (mobile collapsed state) */
+.sim-stub-horiz {
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+  cursor: pointer;
+}
+.sim-stub-horiz span { font-size: 11px; font-weight: 700; color: #1d9e75; }
+
+/* ---------------------------------------------------------------
+   Simulator header (title, run/reset buttons, speed selector)
+   --------------------------------------------------------------- */
+#sim-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: #0d1117;
+  border-bottom: 1px solid #21262d;
+}
+#sim-header h3 { font-size: 12px; font-weight: 700; color: #c9d1d9; margin: 0; }
+
+/* Collapse toggle inside the header */
+.sim-toggle-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #1a2a1a;
+  border: 1px solid #21262d;
+  border-radius: 4px;
+  color: #1d9e75;
+  font-size: 12px;
+  font-weight: 700;
+  transition: background .15s;
+}
+.sim-toggle-btn:hover { background: #1d3a1d; }
+
+/* Run / reset control buttons */
+.sim-run-btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s;
+}
+#btn-sim-run          { background: #1d9e75; color: #fff; }
+#btn-sim-run.running  { background: #a32d2d; }
+#btn-sim-stop         { background: #444; color: #eee; }
+
+/* Speed selector dropdown */
+#sim-speed { font-size: 10px; color: #8b949e; margin-left: auto; }
+#sim-speed select {
+  background: #0d1117;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 3px;
+  font-size: 10px;
+  padding: 2px 4px;
+}
+
+/* ---------------------------------------------------------------
+   Simulator scrollable body
+   --------------------------------------------------------------- */
+#sim-body { flex: 1; overflow-y: auto; padding: 8px; }
+.sim-section { margin-bottom: 10px; }
+.sim-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #8b949e;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  padding: 4px 0 5px;
+  border-bottom: 1px solid #21262d;
+  margin-bottom: 6px;
+}
+
+/* ---------------------------------------------------------------
+   Board SVG visual
+   --------------------------------------------------------------- */
+#board-svg-wrap { display: flex; justify-content: center; padding: 4px 0 8px; position: relative; }
+#board-svg-wrap svg { max-width: 100%; height: auto; }
+
+/* ---------------------------------------------------------------
+   Digital pin rows
+   --------------------------------------------------------------- */
+.pin-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 4px;
+  border-radius: 4px;
+  transition: background .1s;
+}
+.pin-row:hover { background: #0d1117; }
+.pin-num  { width: 22px; font-size: 10px; font-weight: 700; color: #534AB7; text-align: right; flex-shrink: 0; }
+.pin-name { width: 48px; font-size: 10px; color: #8b949e; flex-shrink: 0; }
+
+/* Mode badge (OUT / IN / PWM / OFF) */
+.pin-mode-badge { width: 46px; font-size: 9px; font-weight: 700; padding: 1px 4px; border-radius: 3px; text-align: center; flex-shrink: 0; }
+.pin-mode-out  { background: #1a3a1a; color: #3fb950; }
+.pin-mode-in   { background: #1a2a3a; color: #79c0ff; }
+.pin-mode-pwm  { background: #2a1a0a; color: #f0883e; }
+.pin-mode-off  { background: #1a1a1a; color: #555; }
+
+/* Toggle button showing HIGH / LOW / pin number for PWM */
+.pin-toggle {
+  width: 38px; height: 18px;
+  border-radius: 9px; border: none;
+  cursor: pointer;
+  font-size: 9px; font-weight: 700;
+  transition: all .15s;
+  flex-shrink: 0;
+}
+.pin-toggle.high       { background: #1d9e75; color: #fff; }
+.pin-toggle.low        { background: #30363d; color: #888; }
+.pin-toggle.input-mode { background: #1a2a3a; color: #79c0ff; cursor: default; }
+
+/* Voltage bar */
+.pin-bar-wrap { flex: 1; height: 8px; background: #161b22; border-radius: 4px; overflow: hidden; position: relative; }
+.pin-bar      { height: 100%; border-radius: 4px; transition: width .2s, background .2s; }
+.pin-bar.high { background: #1d9e75; }
+.pin-bar.pwm  { background: #f0883e; }
+.pin-bar.low  { background: #21262d; }
+.pin-val { width: 30px; font-size: 9px; color: #8b949e; text-align: right; flex-shrink: 0; }
+
+/* ---------------------------------------------------------------
+   Analog input sliders
+   --------------------------------------------------------------- */
+.analog-row   { display: flex; align-items: center; gap: 6px; padding: 3px 4px; }
+.analog-label { width: 24px; font-size: 10px; font-weight: 700; color: #f0883e; text-align: right; flex-shrink: 0; }
+.analog-name  { width: 46px; font-size: 9px; color: #8b949e; flex-shrink: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.analog-slider {
+  flex: 1;
+  -webkit-appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: #21262d;
+  outline: none;
+  cursor: pointer;
+}
+.analog-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: #f0883e;
+  cursor: pointer;
+}
+.analog-num  { width: 28px; font-size: 9px; color: #f0883e; text-align: right; font-family: monospace; }
+.analog-volt { width: 28px; font-size: 9px; color: #ba7517; text-align: right; font-family: monospace; }
+
+/* ---------------------------------------------------------------
+   Serial monitor
+   --------------------------------------------------------------- */
+#serial-monitor {
+  height: 130px;
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 5px;
+  overflow-y: auto;
+  padding: 5px 7px;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: #3fb950;
+  line-height: 1.5;
+}
+
+/* Message colour classes:
+   .serial-rx  = data received from MCU (green)
+   .serial-tx  = data sent by the user (blue)
+   .serial-sys = system / info messages (grey italic) */
+.serial-rx  { color: #3fb950; }
+.serial-tx  { color: #79c0ff; }
+.serial-sys { color: #8b949e; font-style: italic; }
+.serial-err { color: #f85149; }
+.serial-ts  { color: #444; font-size: 9px; margin-right: 4px; }
+
+#serial-input-row { display: flex; gap: 4px; margin-top: 5px; }
+#serial-input {
+  flex: 1;
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 4px;
+  padding: 3px 7px;
+  font-size: 11px;
+  color: #c9d1d9;
+  outline: none;
+  font-family: 'Courier New', monospace;
+}
+#serial-input:focus { border-color: #534AB7; }
+.btn-serial-send {
+  padding: 4px 8px;
+  background: #534AB7;
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.btn-serial-send:hover { opacity: .82; }
+
+/* ---------------------------------------------------------------
+   Execution clock and active-line highlight
+   --------------------------------------------------------------- */
+#sim-clock { font-size: 10px; color: #8b949e; font-family: monospace; padding: 3px 4px; }
+.sim-active-line {
+  background: #1a2a1a;
+  border-left: 2px solid #1d9e75;
+  padding-left: 4px;
+  border-radius: 2px;
+}

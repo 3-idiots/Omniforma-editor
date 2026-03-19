@@ -1,0 +1,125 @@
+/* =============================================================
+   layout.css
+   Main three-column flex layout: left pane (Blockly workspace
+   or text editor), output panel, and simulator panel.
+   Also covers the board selector bar, mode-switch tabs, and
+   draggable resize handles between columns.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   Main content area
+   --------------------------------------------------------------- */
+#main { display: flex; flex: 1; overflow: hidden; min-height: 0; }
+
+/* ---------------------------------------------------------------
+   Left pane - hosts the Blockly div OR the text editor pane
+   --------------------------------------------------------------- */
+#left-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------------
+   Board selector bar
+   Sits between the topbar and the main content area.
+   --------------------------------------------------------------- */
+#board-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  background: #010409;
+  border-bottom: 1px solid #21262d;
+  flex-shrink: 0;
+}
+#board-bar label {
+  font-size: 11px;
+  color: #8b949e;
+  font-weight: 600;
+  white-space: nowrap;
+}
+#board-select {
+  background: #0d1117;
+  color: #c9d1d9;
+  border: 1px solid #30363d;
+  border-radius: 5px;
+  padding: 4px 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+#board-select:focus { outline: none; border-color: #534AB7; }
+
+/* Info string showing pin counts, flash size etc. */
+#board-info { font-size: 10px; color: #8b949e; margin-left: auto; }
+.board-badge {
+  display: inline-block;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  background: #1a3a5c;
+  color: #79c0ff;
+  margin-left: 6px;
+}
+
+/* ---------------------------------------------------------------
+   Mode-switch tab bar (Blocks vs MicroPython Editor)
+   --------------------------------------------------------------- */
+#mode-bar {
+  display: flex;
+  background: #0f1e3a;
+  border-bottom: 1px solid #0f3460;
+}
+.mode-btn {
+  padding: 7px 18px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  color: #aaa;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+}
+.mode-btn.active {
+  color: #e94560;
+  border-bottom-color: #e94560;
+  background: #16213e;
+}
+
+/* ---------------------------------------------------------------
+   Blockly workspace div
+   Blockly injects its canvas here; the flex: 1 makes it fill
+   the remaining height of the left pane.
+   --------------------------------------------------------------- */
+#blockly-div { flex: 1; background: #0d1117; }
+
+/* ---------------------------------------------------------------
+   Draggable resize handles between panels
+   The ::after pseudo-element is the visible grip indicator.
+   .dragging class is added via JS while the user is dragging.
+   --------------------------------------------------------------- */
+.resize-handle {
+  width: 5px;
+  cursor: col-resize;
+  background: transparent;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  transition: background .15s;
+}
+.resize-handle:hover,
+.resize-handle.dragging { background: #534AB7; }
+
+.resize-handle::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  height: 40px; width: 3px;
+  border-radius: 3px;
+  background: #334;
+  transition: background .15s;
+}
+.resize-handle:hover::after,
+.resize-handle.dragging::after { background: #7f77dd; }

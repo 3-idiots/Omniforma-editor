@@ -1,0 +1,163 @@
+/* =============================================================
+   modal.css
+   Mode-switch warning dialog shown when the user tries to
+   switch between the Blockly workspace and the MicroPython
+   text editor.  The overlay darkens the screen; the card
+   slides in with a subtle scale animation.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   Full-screen semi-transparent overlay
+   --------------------------------------------------------------- */
+#mode-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, .72);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+}
+#mode-modal-overlay.open { display: flex; }
+
+/* ---------------------------------------------------------------
+   Modal card
+   --------------------------------------------------------------- */
+#mode-modal {
+  background: #16213e;
+  border: 2px solid #e94560;
+  border-radius: 10px;
+  padding: 0;
+  width: 380px;
+  max-width: 92vw;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, .7);
+  animation: modalPop .18s ease;
+}
+
+@keyframes modalPop {
+  from { transform: scale(.88); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ---------------------------------------------------------------
+   Modal header bar
+   --------------------------------------------------------------- */
+#mode-modal-header {
+  background: #e94560;
+  padding: 12px 16px;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+#mode-modal-header h2       { font-size: 13px; font-weight: 700; color: #fff; margin: 0; }
+#mode-modal-header .modal-icon { font-size: 18px; }
+
+/* ---------------------------------------------------------------
+   Modal body text
+   --------------------------------------------------------------- */
+#mode-modal-body { padding: 16px; }
+#mode-modal-body p {
+  font-size: 12px;
+  color: #c9d1d9;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+/* Highlighted note block with left accent border */
+#mode-modal-body .modal-note {
+  font-size: 11px;
+  color: #8b949e;
+  background: #0d1117;
+  border-left: 3px solid #e94560;
+  padding: 6px 10px;
+  border-radius: 3px;
+  margin-bottom: 14px;
+}
+
+/* ---------------------------------------------------------------
+   Modal footer (Cancel / Confirm buttons)
+   --------------------------------------------------------------- */
+#mode-modal-footer {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  padding: 0 16px 16px;
+}
+.modal-btn {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.modal-btn:hover          { opacity: .82; }
+.modal-btn-cancel  { background: #30363d; color: #c9d1d9; }
+.modal-btn-confirm { background: #e94560; color: #fff; }
+
+
+/* =============================================================
+   responsive.css
+   Breakpoint overrides for tablets (max-width: 900px) and
+   phones (max-width: 600px).  All three panels stack vertically
+   on small screens; resize handles switch to row orientation.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   Tablet / small laptop
+   --------------------------------------------------------------- */
+@media (max-width: 900px) {
+
+  /* Stack all panes vertically instead of side by side */
+  #main { flex-direction: column; }
+  #left-pane { min-height: 240px; flex: 1 1 240px; }
+
+  /* Output panel becomes a horizontal bar at the bottom */
+  #panel {
+    width: 100% !important;
+    min-width: unset;
+    max-width: unset;
+    border-left: none;
+    border-top: 2px solid #0f3460;
+    flex-shrink: 0;
+    height: 220px;
+    min-height: 80px;
+    max-height: 50vh;
+  }
+  #panel.collapsed { width: 100% !important; height: 36px !important; min-height: 36px; }
+  #panel.collapsed .panel-stub       { display: none; }
+  #panel.collapsed .panel-stub-horiz { display: flex; }
+
+  /* Simulator panel also horizontal */
+  #sim-panel {
+    width: 100% !important;
+    min-width: unset;
+    max-width: unset;
+    border-left: none;
+    border-top: 2px solid #21262d;
+    flex-shrink: 0;
+    height: 220px;
+    min-height: 80px;
+    max-height: 50vh;
+  }
+  #sim-panel.collapsed { width: 100% !important; height: 36px !important; min-height: 36px; }
+  #sim-panel.collapsed .sim-stub       { display: none; }
+  #sim-panel.collapsed .sim-stub-horiz { display: flex; }
+
+  /* Resize handles become horizontal row-resize bars */
+  .resize-handle { width: 100%; height: 5px; cursor: row-resize; }
+  .resize-handle::after { height: 3px; width: 40px; }
+
+  #topbar { flex-wrap: wrap; }
+  #topbar h1 { font-size: 13px; }
+}
+
+/* ---------------------------------------------------------------
+   Phone
+   --------------------------------------------------------------- */
+@media (max-width: 600px) {
+  .btn { padding: 5px 8px; font-size: 11px; }
+  /* Hide the app name on very small screens to reclaim topbar space */
+  #topbar h1 { display: none; }
+}

@@ -1,0 +1,162 @@
+/* =============================================================
+   panels.css
+   Output panel (MicroPython / C++ / ASM / HEX tabs).
+   Handles the collapsible panel, tab bar, code output bodies,
+   vertical stub labels when collapsed, and the compile error bar.
+   ============================================================= */
+
+/* ---------------------------------------------------------------
+   Output panel container
+   --------------------------------------------------------------- */
+#panel {
+  width: 440px;
+  min-width: 180px;
+  max-width: 60vw;
+  display: flex;
+  flex-direction: column;
+  background: #16213e;
+  border-left: 2px solid #0f3460;
+  position: relative;
+  transition: width .2s;
+}
+
+/* Collapsed state - shrinks to a thin stub */
+#panel.collapsed {
+  width: 36px !important;
+  min-width: 36px;
+  overflow: hidden;
+}
+#panel.collapsed .panel-tab-bar,
+#panel.collapsed .panel-body,
+#panel.collapsed .panel-collapse-bar { display: none; }
+
+/* ---------------------------------------------------------------
+   Tab bar row (contains tab buttons + the collapse toggle button)
+   --------------------------------------------------------------- */
+.panel-header-row {
+  display: flex;
+  align-items: center;
+  background: #0f3460;
+  flex-shrink: 0;
+  gap: 0;
+}
+.panel-tab-bar { display: flex; flex: 1; background: transparent; overflow-x: auto; }
+.panel-tab {
+  flex: 1;
+  padding: 8px 4px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 600;
+  color: #aaa;
+  border-bottom: 3px solid transparent;
+  transition: all .15s;
+  white-space: nowrap;
+}
+.panel-tab.active { color: #e94560; border-bottom-color: #e94560; background: #16213e; }
+
+/* Panel body areas - only the active one is visible */
+.panel-body { flex: 1; overflow: auto; padding: 10px; display: none; }
+.panel-body.active { display: block; }
+
+/* ---------------------------------------------------------------
+   Collapse toggle button (right edge of the tab bar)
+   --------------------------------------------------------------- */
+.panel-toggle-btn {
+  flex-shrink: 0;
+  width: 28px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: #0c2a4a;
+  border: none;
+  color: #79c0ff;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background .15s;
+  padding: 8px 4px;
+  border-left: 1px solid #0f3460;
+}
+.panel-toggle-btn:hover { background: #1a3a5c; }
+
+/* ---------------------------------------------------------------
+   Vertical stub shown when the panel is collapsed (desktop)
+   Click it to re-expand the panel.
+   --------------------------------------------------------------- */
+.panel-stub {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 8px;
+  gap: 6px;
+  width: 36px;
+  height: 100%;
+}
+#panel.collapsed .panel-stub { display: flex; }
+.panel-stub-label {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 10px;
+  font-weight: 700;
+  color: #79c0ff;
+  letter-spacing: 1px;
+  cursor: pointer;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+.panel-stub-icon { font-size: 14px; color: #79c0ff; cursor: pointer; }
+
+/* Horizontal stub used on mobile when panel is collapsed */
+.panel-stub-horiz {
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 10px;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+  cursor: pointer;
+}
+.panel-stub-horiz span { font-size: 11px; font-weight: 700; color: #79c0ff; }
+
+/* ---------------------------------------------------------------
+   Compile error / warning bar
+   Displayed at the bottom of the output panel when the validator
+   finds errors. Colour is overridden to orange for warnings only.
+   --------------------------------------------------------------- */
+#panel-error-bar {
+  display: none;
+  background: #2a0a0a;
+  border-top: 2px solid #f85149;
+  border-bottom: 1px solid #3a1a1a;
+  padding: 8px 14px;
+  font-size: 11px;
+  color: #f85149;
+  font-family: 'Courier New', monospace;
+  flex-shrink: 0;
+  line-height: 1.5;
+}
+#panel-error-bar .err-title {
+  font-weight: 700;
+  font-size: 12px;
+  margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+#panel-error-bar .err-body { color: #ff9b9b; white-space: pre-wrap; word-break: break-word; }
+#panel-error-bar .err-close {
+  margin-left: auto;
+  cursor: pointer;
+  color: #f85149;
+  font-size: 14px;
+  line-height: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  flex-shrink: 0;
+}
+#panel-error-bar .err-close:hover { color: #fff; }
