@@ -196,18 +196,6 @@ omniforma/
 
 ---
 
-## Built-in Examples
-
-Five complete example programs are available from the Examples menu:
-
-- **Blink** — LED blink with Serial output
-- **Sensor** — Analog sensor reading mapped to LED brightness
-- **Servo** — Servo sweep with serial position reporting
-- **Traffic Light** — Three-LED traffic light sequence with delays
-- **Counter** — Serial counter incrementing with LED flash
-
----
-
 ## Known Constraints
 
 - The simulator executes C++ statement-by-statement in JavaScript. It does not implement the full C++ language — complex pointer arithmetic, structs, classes, and preprocessor directives are not supported.
