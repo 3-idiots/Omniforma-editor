@@ -8,7 +8,9 @@
 Omniforma Editor is a browser-based visual programming environment for microcontrollers. It combines a drag-and-drop block editor, a MicroPython text editor, a multi-stage code compiler, a static validator, and a live pin-level simulator — all running entirely in the browser with no installation, no backend server, and no build tools required.
 
 The project is built for students, hobbyists, and educators who want to program Arduino-family boards and MicroPython-capable devices without needing the Arduino IDE or a separate Python editor. The user snaps blocks together, sees the generated code in real time, catches errors before flashing, and simulates execution on a virtual board.
-
+---
+## Preview
+    https://3-idiots.github.io/Omniforma-editor/
 ---
 
 ## Core Features
